@@ -21,7 +21,7 @@ class TaskServiceTest {
 
     @Test
     public void tasks_are_stored_in_the_database_with_the_current_timestamp() {
-        var now = Instant.now();
+        var now = java.time.LocalDateTime.now();
         var due = LocalDate.of(2025, 2, 7);
         taskService.createTask("Do this", due);
         assertThat(taskService.list(PageRequest.ofSize(1))).singleElement()

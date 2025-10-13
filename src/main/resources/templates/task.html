@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tasks</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .qr-code {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Tasks</h1>
+
+<!-- Mensagem de sucesso ou erro ao gerar QR code -->
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+
+<!-- Tabela de Tasks -->
+<table>
+    <thead>
+    <tr>
+        <th>Descrição</th>
+        <th>Data de Vencimento</th>
+        <th>Data de Criação</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.dueDate}"></td>
+        <td th:text="${task.creationDate}"></td>
+        <td>
+            <!-- Botão para gerar QR code -->
+            <form th:action="@{/tasks/{id}/qrcode(id=${task.id})}" method="post">
+                <button type="submit">Gerar QR Code</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Exibe o QR code gerado -->
+<div class="qr-code" th:if="${qrCodePath}">
+    <h3>QR Code gerado:</h3>
+    <img th:src="@{${qrCodePath}}" alt="QR Code">
+</div>
+
+</body>
+</html>
