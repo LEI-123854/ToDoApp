@@ -3,8 +3,8 @@ package com.example.examplefeature;
 import jakarta.persistence.*;
 import org.jspecify.annotations.Nullable;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task")
@@ -21,16 +21,17 @@ public class Task {
     private String description = "";
 
     @Column(name = "creation_date", nullable = false)
-    private Instant creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "due_date")
     @Nullable
     private LocalDate dueDate;
 
-    protected Task() { // To keep Hibernate happy
+    protected Task() {
+        // Hibernate precisa do construtor vazio
     }
 
-    public Task(String description, Instant creationDate) {
+    public Task(String description, LocalDateTime creationDate) {
         setDescription(description);
         this.creationDate = creationDate;
     }
@@ -45,12 +46,14 @@ public class Task {
 
     public void setDescription(String description) {
         if (description.length() > DESCRIPTION_MAX_LENGTH) {
-            throw new IllegalArgumentException("Description length exceeds " + DESCRIPTION_MAX_LENGTH);
+            throw new IllegalArgumentException(
+                    "Description length exceeds " + DESCRIPTION_MAX_LENGTH
+            );
         }
         this.description = description;
     }
 
-    public Instant getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
@@ -77,10 +80,16 @@ public class Task {
 
     @Override
     public int hashCode() {
-        // Hashcode should never change during the lifetime of an object. Because of
-        // this we can't use getId() to calculate the hashcode. Unless you have sets
-        // with lots of entities in them, returning the same hashcode should not be a
-        // problem.
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", creationDate=" + creationDate +
+                ", dueDate=" + dueDate +
+                '}';
     }
 }
