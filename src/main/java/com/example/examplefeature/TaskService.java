@@ -42,7 +42,7 @@ public class TaskService {
     }
     public List<Task> list() {
         return taskRepository.findAll();
-
+    }
     @Transactional(readOnly = true)
     public Task findById(Long id) {
         return taskRepository.findById(id)

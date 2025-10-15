@@ -17,12 +17,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
 import com.vaadin.flow.theme.lumo.LumoUtility;
-
-import java.io.ByteArrayInputStream;
 import com.vaadin.flow.server.StreamResource;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,12 +28,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 
-import com.vaadin.flow.component.page.Page;
-
-
-import com.vaadin.flow.server.StreamResource;
-import com.vaadin.flow.component.html.Anchor;
-import java.io.ByteArrayInputStream;
 import static com.vaadin.flow.spring.data.VaadinSpringDataHelpers.toSpringPageRequest;
 
 @Route("")
@@ -46,15 +36,10 @@ import static com.vaadin.flow.spring.data.VaadinSpringDataHelpers.toSpringPageRe
 public class TaskListView extends Main {
 
     private final TaskService taskService;
-
-    final TextField description;
-    final DatePicker dueDate;
-    final Button createBtn;
-    final Button pdfBtn;
-    final Grid<Task> taskGrid;
     private final TextField description;
     private final DatePicker dueDate;
     private final Button createBtn;
+    private final Button pdfBtn;
     private final Grid<Task> taskGrid;
 
     public TaskListView(TaskService taskService) {
@@ -73,33 +58,13 @@ public class TaskListView extends Main {
         createBtn = new Button("Create", event -> createTask());
         createBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        pdfBtn = new Button("Download PDF", event -> {
-            List<Task> tarefas = taskService.list(); // Fetch tasks
-            byte[] pdfBytes = PdfDownload.gerarPdf(tarefas);
-
-            if (pdfBytes != null) {
-                StreamResource resource = new StreamResource("relatorio.pdf", () -> new ByteArrayInputStream(pdfBytes));
-                Anchor downloadLink = new Anchor(resource, "");
-                downloadLink.getElement().setAttribute("download", true);
-                downloadLink.getStyle().set("display", "none");
-
-                add(downloadLink);
-                downloadLink.getElement().executeJs("this.click()");
-                getElement().executeJs("setTimeout(() => $0.remove(), 100)", downloadLink.getElement());
-            } else {
-                Notification.show("Erro ao gerar o PDF", 3000, Notification.Position.BOTTOM_END)
-                        .addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }
-        });
-
+        pdfBtn = new Button("Download PDF", event -> downloadPdf());
         pdfBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-
-        var dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(getLocale())
-        var dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                 .withLocale(getLocale())
                 .withZone(ZoneId.systemDefault());
-        var dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
                 .withLocale(getLocale());
 
         taskGrid = new Grid<>();
@@ -138,24 +103,35 @@ public class TaskListView extends Main {
                 .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
+    private void downloadPdf() {
+        List<Task> tarefas = taskService.list(); // Fetch tasks
+        byte[] pdfBytes = PdfDownload.gerarPdf(tarefas);
 
+        if (pdfBytes != null) {
+            StreamResource resource = new StreamResource("relatorio.pdf", () -> new ByteArrayInputStream(pdfBytes));
+            Anchor downloadLink = new Anchor(resource, "");
+            downloadLink.getElement().setAttribute("download", true);
+            downloadLink.getStyle().set("display", "none");
+            add(downloadLink);
+            downloadLink.getElement().executeJs("this.click()");
+            getElement().executeJs("setTimeout(() => $0.remove(), 100)", downloadLink.getElement());
+        } else {
+            Notification.show("Erro ao gerar o PDF", 3000, Notification.Position.BOTTOM_END)
+                    .addThemeVariants(NotificationVariant.LUMO_ERROR);
+        }
+    }
 
-
-    // Gera QR Code em memória e abre no navegador
     private void generateQRCode(Task task) {
         try {
             String data = "Task: " + task.getDescription() + "\nDue: " +
                     (task.getDueDate() != null ? task.getDueDate() : "N/A");
 
-            // Gera QR Code em memória
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             QRCodeGenerator.generateQRCodeStream(data, 200, 200, outputStream);
 
-            // Cria recurso Vaadin
             StreamResource resource = new StreamResource("task_" + task.getId() + ".png",
                     () -> new ByteArrayInputStream(outputStream.toByteArray()));
 
-            // Link para abrir no navegador
             Anchor downloadLink = new Anchor(resource, "Abrir QR");
             downloadLink.setTarget("_blank");
 
