@@ -40,6 +40,8 @@ public class TaskService {
     public List<Task> list(Pageable pageable) {
         return taskRepository.findAllBy(pageable).toList();
     }
+    public List<Task> list() {
+        return taskRepository.findAll();
 
     @Transactional(readOnly = true)
     public Task findById(Long id) {
