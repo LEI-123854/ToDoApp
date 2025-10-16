@@ -16,6 +16,9 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.temporal.ChronoUnit; //
+import com.example.examplefeature.Task;
+import com.example.examplefeature.TaskRepository;
 
 @Service
 public class TaskService {
@@ -42,7 +45,7 @@ public class TaskService {
     }
     public List<Task> list() {
         return taskRepository.findAll();
-
+    }
     @Transactional(readOnly = true)
     public Task findById(Long id) {
         return taskRepository.findById(id)
@@ -50,7 +53,7 @@ public class TaskService {
     }
 
     /**
-     * Gera o QR Code de uma task e salva em um diretório seguro no sistema.
+     * Gera o QR Code de uma task e salva num diretório seguro no sistema.
      */
     public void generateQRCodeForTask(Task task, String fileName) throws Exception {
         String data = "Task: " + task.getDescription() +
