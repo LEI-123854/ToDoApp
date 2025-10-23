@@ -4,7 +4,13 @@
 - [ ] TODO Replace or update this README with instructions relevant to your application
 # build.yml:
 - tem como objetivo automatizar o processo de compilação de um projeto Java sempre que ocorre um push na branch principal (main). Ao ser acionado, o workflow executa um conjunto de etapas num ambiente Ubuntu: primeiro, faz o checkout do repositório para garantir acesso ao código-fonte; em seguida, instala o JDK 21 da distribuição Temurin, necessário para compilar o projeto. Depois, utiliza o Maven para limpar e compilar o código através do comando mvn clean package, gerando o ficheiro .jar dentro da pasta target/. Por fim, o workflow carrega automaticamente o ficheiro .jar como um artefacto denominado build-jar, permitindo que este seja descarregado a partir da secção de Actions do GitHub. Desta forma, o processo de build torna-se contínuo, padronizado e independente do ambiente local de desenvolvimento.
-- 
+- Código de trigger que faz a ativacao do codigo do build.yml ao ser feito push no branch main:
+  ``` on:
+  push:
+    branches:
+      - main
+
+
 ## Project Structure
 
 The sources of your App have the following structure:
