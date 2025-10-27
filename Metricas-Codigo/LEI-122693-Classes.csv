@@ -1,0 +1,21 @@
+Class Name;ATFD;CCC;CBO;DAC;DIT;CHD;CHEF;CHER;CHL;CHVC;CHVL;LCOM;CLOC;CMI;MPC;NCSS;NOAC;NOAM;NOA;SIZE2;NOC;NOM;NOO;NOOM;NOPA;RFC;TCC;WOC;WMC
+com.example.Application;0;0;0;0;1;3.0;90.0;0.0067;10;8;30.0;1;3;79.2493;1;1;0;1;0;15;0;1;15;0;0;2;0.0;1.0;1
+com.example.QRCodeGenerator;1;1;1;0;1;13.8182;2956.6755;0.0687;45;27;213.9699;1;22;54.2653;8;9;0;2;0;15;0;2;15;0;0;10;1.0;1.0;3
+com.example.base.ui.MainErrorHandler;2;0;0;1;1;15.0;2875.3046;0.0674;38;33;191.687;1;15;58.373;14;8;0;1;1;15;0;1;14;0;0;16;0.0;1.0;1
+com.example.base.ui.MainLayout;11;2;0;0;3;18.3158;7255.2016;0.1249;73;43;396.1173;2;27;50.3707;19;18;0;3;11;100;N/A;4;97;0;0;21;0.0;1.0;5
+com.example.base.ui.component.ViewToolbar;12;1;2;0;3;12.1136;4411.5331;0.0897;71;35;364.1791;1;23;52.2147;10;16;0;1;9;79;N/A;2;78;0;0;8;0.0;1.0;3
+com.example.examplefeature.Task;1;5;4;4;1;22.2069;13989.2816;0.1935;108;57;629.9521;4;54;42.2405;11;21;5;6;5;29;0;11;24;3;0;17;0.1333;0.1667;16
+com.example.examplefeature.TaskRepository;N/A;0;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;0;0.0;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A;N/A
+com.example.examplefeature.TaskService;3;4;4;1;1;36.6;28538.0024;0.3113;129;66;779.7268;2;53;41.8304;30;28;0;5;1;20;0;6;19;0;0;29;0.4;1.0;10
+com.example.examplefeature.controller.TaskController;0;1;2;1;1;14.1667;4216.2728;0.087;59;33;297.6193;1;28;50.931;12;12;0;2;1;17;0;3;16;0;0;9;1.0;1.0;4
+com.example.examplefeature.ui.TaskListView;10;2;4;5;5;53.5088;74024.6372;0.5877;201;118;1383.4113;1;71;37.4082;64;44;0;2;13;138;0;3;133;0;0;58;1.0;1.0;5
+
+
+
+"Algumas classes demonstram boa modularização, com acoplamento moderado e coesão aceitável."
+
+"Outras classes mostram sinais de “classe-faz-tudo”: altos valores de WMC ou RFC, o que pode indicar que deveriam ser refatoradas (ex: divididas em classes menores ou com responsabilidades mais claras)."
+
+"Há potencial para melhoria no encapsulamento: se há muitas classes com elevado número de atributos públicos (NOPA), isso sugere que parte do design orientado a objetos não está a tirar pleno proveito dos princípios de encapsulamento."
+
+"Sugiro revisar as classes com valores de métricas extremos (top 5% ou 10% em risco) e verificar se podem ser simplificadas, reduzir método, reduzir dependências externas ou dividir responsabilidades."
