@@ -127,7 +127,7 @@ public class TaskListView extends Main {
             downloadLink.getElement().executeJs("this.click()");
             getElement().executeJs("setTimeout(() => $0.remove(), 100)", downloadLink.getElement());
       if(pdfBytes == null) {
-            Notification.show("Erro ao gerar o PDF", 3000, Notification.Position.BOTTOM_END)
+            Notification.show("Erro ao gerar o PDF ", 3000, Notification.Position.BOTTOM_END)
                     .addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
