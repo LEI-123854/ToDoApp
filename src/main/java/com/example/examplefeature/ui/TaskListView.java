@@ -119,8 +119,7 @@ public class TaskListView extends Main {
         byte[] pdfBytes = PdfDownload.gerarPdf(tarefas);
 
 
-            StreamResource resource = new StreamResource("relatorio.pdf",
-                    () -> new ByteArrayInputStream(pdfBytes));
+            StreamResource resource = new StreamResource("relatorio.pdf", () -> new ByteArrayInputStream(pdfBytes));
             Anchor downloadLink = new Anchor(resource, "");
             downloadLink.getElement().setAttribute("download", true);
             downloadLink.getStyle().set("display", "none");
