@@ -32,7 +32,7 @@ public class TaskService {
     @Transactional
     public void createTask(String description, @Nullable LocalDate dueDate) {
         if ("fail".equals(description)) {
-            throw new RuntimeException("This is for testing the error handler");;
+            throw new RuntimeException("This is for testing the error handler");
         }
         var task = new Task(description, LocalDateTime.now());
         task.setDueDate(dueDate);
