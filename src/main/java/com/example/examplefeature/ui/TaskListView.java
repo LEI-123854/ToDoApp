@@ -118,7 +118,7 @@ public class TaskListView extends Main {
         List<Task> tarefas = taskService.list();
         byte[] pdfBytes = PdfDownload.gerarPdf(tarefas);
 
-        if (pdfBytes != null) {
+
             StreamResource resource = new StreamResource("relatorio.pdf",
                     () -> new ByteArrayInputStream(pdfBytes));
             Anchor downloadLink = new Anchor(resource, "");
@@ -127,7 +127,7 @@ public class TaskListView extends Main {
             add(downloadLink);
             downloadLink.getElement().executeJs("this.click()");
             getElement().executeJs("setTimeout(() => $0.remove(), 100)", downloadLink.getElement());
-        } else {
+      if(pdfBytes == null) {
             Notification.show("Erro ao gerar o PDF", 3000, Notification.Position.BOTTOM_END)
                     .addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
