@@ -1,4 +1,3 @@
-- Atualizacao para testar o sonar analysis 
 # link do video: https://youtu.be/s_uZOUwfi6M
 # App README
 
